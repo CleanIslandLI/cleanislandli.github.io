@@ -1,0 +1,16 @@
+# Free Supabase projects pause after about a week with no activity.
+# This pings the booking API twice a week so online booking stays awake, even in the off-season. Free on GitHub.
+name: Keep booking backend awake
+on:
+  schedule: [{ cron: "17 14 * * 1,4" }]
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ping
+        run: |
+          URL=$(grep -oE 'https://[a-z0-9]+\.supabase\.co' assets/js/config.js | head -1)
+          if [ -z "$URL" ]; then echo "Backend not configured yet"; exit 0; fi
+          curl -fsS -X POST -H "Content-Type: application/json" -d '{}' "$URL/functions/v1/api?action=catalog" > /dev/null && echo "pinged $URL"

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 80" role="img" aria-label="Clean Island Power Washing">
+  <defs>
+    <clipPath id="d"><path d="M36 6C31 13 12 35 12 50a24 24 0 0 0 48 0C60 35 41 13 36 6Z"/></clipPath>
+    <linearGradient id="w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F7BEA"/><stop offset="1" stop-color="#1A55B8"/></linearGradient>
+  </defs>
+  <g clip-path="url(#d)"><rect width="72" height="80" fill="#0E2A47"/><path d="M4 48c9-6 17-6 26-1s18 6 38-2v31H4Z" fill="url(#w)"/><path d="M2 51c10-7 19-7 28-2s17 5 40-3" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/><path d="M16 62c8-3 14-3 21 0s13 3 21-1" fill="none" stroke="#9CC7FA" stroke-width="2" stroke-linecap="round" opacity=".8"/></g>
+  <path d="M45 25c3 4 6 9 7 14" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+  <text x="76" y="44" font-family="Archivo, 'Arial Black', Arial, sans-serif" font-weight="800" font-stretch="125%" font-size="30" fill="#FFFFFF" letter-spacing="-0.5">Clean Island</text>
+  <text x="78" y="64" font-family="'Public Sans', Arial, sans-serif" font-weight="600" font-size="12.5" fill="#9CC7FA" letter-spacing="4.2">POWER WASHING</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" role="img" aria-label="Clean Island Power Washing">
+  <defs>
+    <clipPath id="ci-drop"><path d="M32 2C27 9 8 31 8 46a24 24 0 0 0 48 0C56 31 37 9 32 2Z"/></clipPath>
+    <linearGradient id="ci-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F7BEA"/><stop offset="1" stop-color="#1A55B8"/></linearGradient>
+  </defs>
+  <g clip-path="url(#ci-drop)">
+    <rect width="64" height="72" fill="#0E2A47"/>
+    <path d="M0 44c9-6 17-6 26-1s18 6 38-2v31H0Z" fill="url(#ci-water)"/>
+    <path d="M-2 47c10-7 19-7 28-2s17 5 40-3" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M12 58c8-3 14-3 21 0s13 3 21-1" fill="none" stroke="#9CC7FA" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+  </g>
+  <path d="M41 21c3 4 6 9 7 14" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+</svg>
