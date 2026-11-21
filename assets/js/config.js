@@ -15,6 +15,6 @@ export const BUSINESS = {
 // Supabase project URL (looks like https://abcdefgh.supabase.co). This is not a secret.
 // Leave blank until the backend is set up; the site still shows prices and estimates.
 export const BACKEND = {
-  projectUrl: "",
+  projectUrl: "https://mvheqhhvahxufcyzfdkg.supabase.co",
 };
 export const API_URL = BACKEND.projectUrl ? BACKEND.projectUrl.replace(/\/$/, "") + "/functions/v1/api" : "";
