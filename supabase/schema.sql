@@ -55,7 +55,7 @@ create table if not exists public.bookings (
   discount_code text references public.discounts(code) on update cascade on delete set null,
   service_date date, time_window text check (time_window in ('am','pm','full','flex')),
   deposit_amount numeric(10,2) not null default 0, amount_paid numeric(10,2) not null default 0,
-  photo_paths text[] not null default '{}',
+  photo_paths jsonb not null default '[]',
   hold_expires_at timestamptz, refund_due boolean not null default false,
   admin_notes text, ip_hash text,
   history jsonb not null default '[]',
@@ -149,7 +149,7 @@ begin
     p->>'address', p->>'town', p->>'zip', (p->>'zone')::int, p->>'property_type', p->>'stories', (p->>'water_access')::boolean,
     p->>'access_notes', p->>'notes', coalesce(p->'items','[]'), p->'estimate', (p->>'estimate_total')::numeric, nullif(p->>'discount_code',''),
     d, case when d is null then null else w end, coalesce((p->>'deposit_amount')::numeric, 0),
-    coalesce(array(select jsonb_array_elements_text(p->'photo_paths')), '{}'), (p->>'hold_expires_at')::timestamptz, p->>'ip_hash',
+    coalesce(p->'photo_paths', '[]'::jsonb), (p->>'hold_expires_at')::timestamptz, p->>'ip_hash',
     jsonb_build_array(jsonb_build_object('at', now(), 'event', 'created', 'status', p->>'status')))
   returning * into r;
   return r;
@@ -187,12 +187,16 @@ alter table public.payments enable row level security;
 alter table public.rate_events enable row level security;
 alter table public.admins enable row level security;
 
-do $$ declare t text; begin
-  foreach t in array array['settings','services','discounts','blackout_dates','bookings'] loop
-    execute format('drop policy if exists admin_all on public.%I', t);
-    execute format('create policy admin_all on public.%I for all to authenticated using (public.is_admin()) with check (public.is_admin())', t);
-  end loop;
-end $$;
+drop policy if exists admin_all on public.settings;
+create policy admin_all on public.settings for all to authenticated using (public.is_admin()) with check (public.is_admin());
+drop policy if exists admin_all on public.services;
+create policy admin_all on public.services for all to authenticated using (public.is_admin()) with check (public.is_admin());
+drop policy if exists admin_all on public.discounts;
+create policy admin_all on public.discounts for all to authenticated using (public.is_admin()) with check (public.is_admin());
+drop policy if exists admin_all on public.blackout_dates;
+create policy admin_all on public.blackout_dates for all to authenticated using (public.is_admin()) with check (public.is_admin());
+drop policy if exists admin_all on public.bookings;
+create policy admin_all on public.bookings for all to authenticated using (public.is_admin()) with check (public.is_admin());
 drop policy if exists admin_read on public.payments;
 create policy admin_read on public.payments for select to authenticated using (public.is_admin());
 drop policy if exists admin_self on public.admins;
@@ -200,7 +204,7 @@ create policy admin_self on public.admins for select to authenticated using (use
 
 -- ---------- photo storage (private) ----------
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-values ('booking-photos', 'booking-photos', false, 10485760, array['image/jpeg','image/png','image/webp','image/heic','image/heif'])
+values ('booking-photos', 'booking-photos', false, 10485760, '{image/jpeg,image/png,image/webp,image/heic,image/heif}')
 on conflict (id) do nothing;
 drop policy if exists "admins read photos" on storage.objects;
 create policy "admins read photos" on storage.objects for select to authenticated using (bucket_id = 'booking-photos' and public.is_admin());
